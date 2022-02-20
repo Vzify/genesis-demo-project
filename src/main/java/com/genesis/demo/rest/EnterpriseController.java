@@ -32,9 +32,9 @@ public class EnterpriseController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EnterpriseDTO> edit(@RequestBody EnterpriseDTO enterpriseDTO){
+    public ResponseEntity<EnterpriseDTO> edit(@RequestBody EnterpriseDTO enterpriseDTO, @PathVariable("id") Long id){
         return new ResponseEntity<>(this.enterpriseMapper.fromDomain(this.enterpriseService
-                .updateEnterprise(enterpriseMapper.toDomain(enterpriseDTO))), HttpStatus.OK);
+                .updateEnterprise(enterpriseMapper.toDomain(enterpriseDTO), id)), HttpStatus.OK);
     }
 
     @PostMapping("/{id}/contact/{contactId}")

@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.util.Set;
 
 @AllArgsConstructor
@@ -12,7 +13,7 @@ import java.util.Set;
 @Builder
 public class EnterpriseDTO {
     private Long id;
-    @NotBlank(message = "VAT is mandatory")
+    @NotNull(message = "VAT is mandatory")
     private String VAT;
     private AddressDTO address;
     private Set<ContactDTO> contacts;

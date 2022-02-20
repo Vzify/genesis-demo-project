@@ -27,8 +27,8 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     }
 
     @Override
-    public Enterprise updateEnterprise(Enterprise incoming) {
-        Enterprise enterprise = enterpriseRepository.findById(incoming.getId()).orElseThrow(EntityNotFoundException::new);
+    public Enterprise updateEnterprise(Enterprise incoming, Long id) {
+        Enterprise enterprise = enterpriseRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         enterprise.setAddress(incoming.getAddress());
         enterprise.setVAT(incoming.getVAT());
         return this.enterpriseRepository.save(enterprise);
