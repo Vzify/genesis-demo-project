@@ -15,7 +15,7 @@ public class AddressDTO {
     private Long id;
     @NotNull(message = "street is mandatory")
     private String street;
-    @NotNull(message = "number is mandatory")
+    @NotNull(message = "house number is mandatory")
     private String number;
     @NotNull(message = "postal Code is mandatory")
     private String postalCode;

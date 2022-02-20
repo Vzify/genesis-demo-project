@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
 @Data
@@ -20,6 +21,7 @@ public class ContactDTO {
     @NotNull(message = "contact type is mandatory")
     private ContactTypeDTO contactTypeDTO;
     @NotNull(message = "address is mandatory")
+    @Valid
     private AddressDTO address;
     private String vat;
 }
