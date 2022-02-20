@@ -23,6 +23,7 @@ public class Contact {
     private Address address;
     @Enumerated(EnumType.STRING)
     private ContactType contactType;
+    @Column(unique=true)
     private String vat;
     @ManyToMany(mappedBy = "contacts")
     private Set<Enterprise> enterprises;

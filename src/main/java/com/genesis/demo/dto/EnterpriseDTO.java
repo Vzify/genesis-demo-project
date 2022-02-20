@@ -18,6 +18,7 @@ public class EnterpriseDTO {
     @NotNull(message = "VAT is mandatory")
     private String VAT;
     @Valid
+    @NotNull(message = "address is mandatory")
     private AddressDTO address;
     private Set<ContactDTO> contacts;
 }

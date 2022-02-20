@@ -17,7 +17,7 @@ public class EnterpriseMapper {
     public EnterpriseDTO fromDomain(Enterprise enterprise) {
         return EnterpriseDTO.builder()
                 .id(enterprise.getId())
-                .VAT(enterprise.getVAT())
+                .VAT(enterprise.getVat())
                 .address(addressMapper.fromDomain(enterprise.getAddress()))
                 .contacts(enterprise.getContacts() != null ?
                         enterprise.getContacts()
@@ -30,7 +30,7 @@ public class EnterpriseMapper {
     public Enterprise toDomain(EnterpriseDTO enterpriseDTO){
         return  Enterprise.builder()
                 .id(enterpriseDTO.getId())
-                .VAT(enterpriseDTO.getVAT())
+                .vat(enterpriseDTO.getVAT())
                 .address(addressMapper.toDomain(enterpriseDTO.getAddress()))
                 .build();
     }

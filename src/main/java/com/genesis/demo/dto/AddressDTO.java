@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import org.springframework.validation.annotation.Validated;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotBlank;
 
 @Data
 @AllArgsConstructor
@@ -13,14 +13,14 @@ import javax.validation.constraints.NotNull;
 @Validated
 public class AddressDTO {
     private Long id;
-    @NotNull(message = "street is mandatory")
+    @NotBlank(message = "street is mandatory")
     private String street;
-    @NotNull(message = "house number is mandatory")
+    @NotBlank(message = "house number is mandatory")
     private String number;
-    @NotNull(message = "postal Code is mandatory")
+    @NotBlank(message = "postal Code is mandatory")
     private String postalCode;
-    @NotNull(message = "city is mandatory")
+    @NotBlank(message = "city is mandatory")
     private String city;
-    @NotNull(message = "country is mandatory")
+    @NotBlank(message = "country is mandatory")
     private String country;
 }

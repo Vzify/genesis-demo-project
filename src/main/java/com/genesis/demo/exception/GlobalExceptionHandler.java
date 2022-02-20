@@ -1,6 +1,8 @@
 package com.genesis.demo.exception;
 
+import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -9,7 +11,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,14 +31,24 @@ public class GlobalExceptionHandler {
         });
         return errors;
     }
-    @ResponseBody
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+
     @ExceptionHandler(EntityNotFoundException.class)
-    public ErrorDetails handleEntityNotFoundException(EntityNotFoundException ex)
-    {
-        return ErrorDetails.builder()
-                .errorDate(new Date())
-                .errorMessage(ex.getMessage())
-                .build();
+    private ResponseEntity<ErrorModel> handleEntityNotFound(EntityNotFoundException ex){
+        ErrorModel error = new ErrorModel(HttpStatus.NOT_FOUND, "Entity not found", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(ContactVatNumberException.class)
+    private ResponseEntity<ErrorModel> handleVatNumberException(ContactVatNumberException ex){
+        ErrorModel error = new ErrorModel(HttpStatus.BAD_REQUEST, "VAT number is either required or not allowed", ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JdbcSQLIntegrityConstraintViolationException.class)
+    private ResponseEntity<ErrorModel> handleDuplicateVAT(JdbcSQLIntegrityConstraintViolationException ex){
+        ErrorModel error = new ErrorModel(HttpStatus.CONFLICT, "this VAT number is already used by another entity",null);
+        return new ResponseEntity<>(error, HttpStatus.CONFLICT);
+    }
+
 }
+

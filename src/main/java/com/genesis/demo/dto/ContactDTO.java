@@ -3,7 +3,6 @@ package com.genesis.demo.dto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.validation.annotation.Validated;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -11,7 +10,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @AllArgsConstructor
 @Builder
-@Validated
 public class ContactDTO {
     private Long id;
     @NotNull(message = "firstname is mandatory")

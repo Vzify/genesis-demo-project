@@ -1,6 +1,7 @@
 package com.genesis.demo.rest;
 
 import com.genesis.demo.dto.ContactDTO;
+import com.genesis.demo.exception.ContactVatNumberException;
 import com.genesis.demo.mappers.ContactMapper;
 import com.genesis.demo.model.Contact;
 import com.genesis.demo.service.ContactService;
@@ -22,9 +23,9 @@ public class ContactController {
     private final ContactMapper contactMapper;
 
     @PostMapping
-    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO contactDTO){
+    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO contactDTO) throws ContactVatNumberException {
         if(!ContactValidatorUtil.isValid(contactDTO)){
-            return new  ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            throw new ContactVatNumberException("Freelance or Employee vat number is incorrect");
         }
         return new  ResponseEntity<>(this.contactMapper.fromDomain(
                 this.contactService.save(contactMapper.toDomain(contactDTO))),

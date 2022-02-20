@@ -30,7 +30,7 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     public Enterprise updateEnterprise(Enterprise incoming, Long id) {
         Enterprise enterprise = enterpriseRepository.findById(id).orElseThrow(EntityNotFoundException::new);
         enterprise.setAddress(incoming.getAddress());
-        enterprise.setVAT(incoming.getVAT());
+        enterprise.setVat(incoming.getVat());
         return this.enterpriseRepository.save(enterprise);
     }
 
