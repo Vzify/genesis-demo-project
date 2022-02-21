@@ -2,6 +2,7 @@ package com.genesis.demo.rest;
 
 import com.genesis.demo.dto.ContactDTO;
 import com.genesis.demo.exception.ContactVatNumberException;
+import com.genesis.demo.exception.VatNumberAlreadyExistsException;
 import com.genesis.demo.mappers.ContactMapper;
 import com.genesis.demo.model.Contact;
 import com.genesis.demo.service.ContactService;
@@ -23,7 +24,7 @@ public class ContactController {
     private final ContactMapper contactMapper;
 
     @PostMapping
-    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO contactDTO) throws ContactVatNumberException {
+    public ResponseEntity<ContactDTO> createContact(@Valid @RequestBody ContactDTO contactDTO) throws ContactVatNumberException, VatNumberAlreadyExistsException {
         if(!ContactValidatorUtil.isValid(contactDTO)){
             throw new ContactVatNumberException("Freelance or Employee vat number is incorrect");
         }
@@ -40,7 +41,7 @@ public class ContactController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ContactDTO> editContact(@RequestBody ContactDTO contactDTO, @PathVariable("id") Long id){
+    public ResponseEntity<ContactDTO> editContact(@RequestBody ContactDTO contactDTO, @PathVariable("id") Long id) throws VatNumberAlreadyExistsException {
         if(!ContactValidatorUtil.isValid(contactDTO)){
             return new  ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
