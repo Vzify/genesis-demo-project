@@ -1,6 +1,5 @@
 package com.genesis.demo.exception;
 
-import org.h2.jdbc.JdbcSQLIntegrityConstraintViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -44,11 +43,10 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
-    @ExceptionHandler(JdbcSQLIntegrityConstraintViolationException.class)
-    private ResponseEntity<ErrorModel> handleDuplicateVAT(JdbcSQLIntegrityConstraintViolationException ex){
-        ErrorModel error = new ErrorModel(HttpStatus.CONFLICT, "this VAT number is already used by another entity",null);
+    @ExceptionHandler(VatNumberAlreadyExistsException.class)
+    private ResponseEntity<ErrorModel> handleDuplicateVAT(VatNumberAlreadyExistsException ex){
+        ErrorModel error = new ErrorModel(HttpStatus.CONFLICT, "VAT number exists",ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.CONFLICT);
     }
-
 }
 

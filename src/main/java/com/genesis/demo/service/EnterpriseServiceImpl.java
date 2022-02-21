@@ -1,5 +1,6 @@
 package com.genesis.demo.service;
 
+import com.genesis.demo.exception.VatNumberAlreadyExistsException;
 import com.genesis.demo.model.Enterprise;
 import com.genesis.demo.repository.EnterpriseRepository;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,11 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     private final ContactService contactService;
 
     @Override
-    public Enterprise create(Enterprise enterprise) {
+    public Enterprise create(Enterprise enterprise) throws VatNumberAlreadyExistsException {
+        Enterprise enterprise1 = this.findByVat(enterprise.getVat());
+        if(enterprise1 != null){
+            throw new VatNumberAlreadyExistsException("VAT number is already assigned to a company");
+        }
         return this.enterpriseRepository.save(enterprise);
     }
 
@@ -37,5 +42,9 @@ public class EnterpriseServiceImpl implements EnterpriseService {
     @Override
     public Enterprise findById(Long id) {
         return this.enterpriseRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    private Enterprise findByVat(String vat){
+        return this.enterpriseRepository.findEnterpriseByVat(vat).orElse(null);
     }
 }

@@ -1,6 +1,7 @@
 package com.genesis.demo.rest;
 
 import com.genesis.demo.dto.EnterpriseDTO;
+import com.genesis.demo.exception.VatNumberAlreadyExistsException;
 import com.genesis.demo.mappers.EnterpriseMapper;
 import com.genesis.demo.model.Enterprise;
 import com.genesis.demo.service.EnterpriseService;
@@ -26,7 +27,7 @@ public class EnterpriseController {
     }
 
     @PostMapping
-    public ResponseEntity<EnterpriseDTO> create(@RequestBody @Valid EnterpriseDTO enterpriseDTO){
+    public ResponseEntity<EnterpriseDTO> create(@RequestBody @Valid EnterpriseDTO enterpriseDTO) throws VatNumberAlreadyExistsException {
         return new ResponseEntity<>(this.enterpriseMapper.fromDomain(this.enterpriseService
                 .create(enterpriseMapper.toDomain(enterpriseDTO))), HttpStatus.CREATED);
     }
